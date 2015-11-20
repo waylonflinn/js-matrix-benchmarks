@@ -22,11 +22,15 @@ I recommend the simple and fantastic node.js server, [http-server](https://githu
 
 Install with [npm](http://npmjs.org) like this,
 
-```npm install -g http-server```
+```
+npm install -g http-server
+```
 
 Then, run this in the root of repository,
 
-```http-server```
+```
+http-server
+```
 
 ## Acknowledgments
 
