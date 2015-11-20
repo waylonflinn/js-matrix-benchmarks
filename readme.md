@@ -11,7 +11,7 @@ Library | License
 ## View Results Online
 See the results in your browser here: [Matrix Benchmarks](http://waylonflinn.github.io/js-matrix-benchmarks/matrix_benchmark.html).
 
-## Running locally requires a web server.
+## Running Locally
 
 Since each library runs in an iFrame you will need to either:
 
@@ -24,7 +24,7 @@ Install with [npm](http://npmjs.org) like this,
 
 ```npm install -g http-server```
 
-Then, run this in the root of repository
+Then, run this in the root of repository,
 
 ```http-server```
 
