@@ -29,18 +29,28 @@ function test(label, f) {
   }
 
   var runCount = 10;
-  var internalRunCount = 100;
+  var internalRunCount = 10;
   var totalIterations = 0;
   var minIterations = 0;
   var maxIterations = 0;
   var totalTime = 0;
   var minTime = 0;
   var maxTime = 0;
-  var timePerRun = 30;
+  var timePerRun = 300;
+  var N = 128;
+  var initData = [];
+
   resetPseudoRandom();
+  for(var i = 0; i < N; i++){
+      var row = [];
+      for(var j = 0; j < N; j++){
+          row[j] = pseudoRandom();
+      }
+      initData.push(row);
+  }
 
   for(var i = 0; i < runCount; ++i) {
-    var data = f(internalRunCount, -1, timePerRun);
+    var data = f(internalRunCount, -1, timePerRun, initData);
     var iterations = internalRunCount * data.loopCount;
     var time = data.time;
     if(i == 0) {
@@ -119,7 +129,3 @@ return {
   };
 
 }();
-
-
-
-

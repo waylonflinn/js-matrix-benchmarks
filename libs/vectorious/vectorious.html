@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Matrix Benchmark</title>
+
+    <!-- Common Utilities -->
+    <script type="text/javascript" src="../../js/rand.js"></script>
+
+    <!-- Matrix Libraries -->
+    <script type="text/javascript" src="vectorious.js"></script>
+
+    <!-- Benchmarking utilities -->
+    <script type="text/javascript" src="../../js/test-helper.js"></script>
+    <script type="text/javascript">
+
+			window.onload = TestHelper.main;
+            var Vector = vectorious.Vector,
+                Matrix = vectorious.Matrix;
+
+              function createMatrix(data) {
+                return new Matrix(data);
+              }
+
+      var tests = {
+
+          'Multiplication': { test:
+            function(count, maxCount, milliSeconds, data) {
+             var m1 = createMatrix(data);
+             var m2 = createMatrix(data);
+             var m3;
+             var start = Date.now();
+ 						var loopCount = 0;
+ 						while (Date.now() - start < milliSeconds && loopCount != maxCount) {
+ 							++loopCount;
+ 							for (var i = 0; i < count; ++i) {
+ 								m3 = m1.multiply(m2);
+ 							}
+ 						}
+             return {time: Date.now()-start, loopCount: loopCount, result: m3};
+            }
+          },
+          'Inverse': {test: null},
+          'Determinant': {test: null},
+          'Trace': {test: null}
+     };
+
+
+    </script>
+	</head>
+	<body>
+  </body>
+</html>
