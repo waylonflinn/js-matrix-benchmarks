@@ -39,12 +39,26 @@
         								m3 = math.multiply(m1, m2);
         							}
         						}
-                    return {time: Date.now()-start, loopCount: loopCount, result: m3};
+                    var elapsed = Date.now() - start;
+                    return {time: elapsed, loopCount: loopCount, result: m3._data};
                   }
                  },
-                'Inverse': {test: null},
-                'Determinant': {test: null},
-                'Trace': {test: null}
+                'Inverse': {test: function(count, maxCount, milliSeconds, data) {
+                    var m1 = createMatrix(data);
+                    var m2;
+                    var start = Date.now();
+                    var loopCount = 0;
+                    while (Date.now() - start < milliSeconds && loopCount != maxCount) {
+                      ++loopCount;
+                      for (var i = 0; i < count; ++i) {
+                        m2 = math.inv(m1);
+                      }
+                    }
+                    var elapsed = Date.now() - start;
+                    return {time: elapsed, loopCount: loopCount, result: m2._data};
+                  }
+                },
+                'Determinant': {test: null}
            };
 
     </script>

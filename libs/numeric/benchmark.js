@@ -11,7 +11,7 @@ window.onload = TestHelper.main;
 var tests = (function () {
 
     function createMatrix(data) {
-        return $M(data);
+        return data;
     }
 
 
@@ -28,14 +28,14 @@ var tests = (function () {
                                  loopCount !== maxCount) {
                           loopCount += 1;
                           for (i = 0; i < count; i += 1) {
-                              m3 = m1.multiply(m2);
+                              m3 = numeric.dot(m1, m2);
                           }
                       }
                       var elapsed = Date.now() - start;
                       return {
                           time: elapsed,
                           loopCount: loopCount,
-                          result: m3.elements
+                          result: m3
                       };
                }
            },
@@ -50,14 +50,14 @@ var tests = (function () {
                                  loopCount !== maxCount) {
                           loopCount += 1;
                           for (i = 0; i < count; i += 1) {
-                              m2 = m1.inverse();
+                              m2 = numeric.inv(m1);
                           }
                       }
                       var elapsed = Date.now() - start;
                       return {
                           time: elapsed,
                           loopCount: loopCount,
-                          result: m2.elements
+                          result: m2
                       };
                }
              },
@@ -72,7 +72,7 @@ var tests = (function () {
                                  loopCount !== maxCount) {
                           loopCount += 1;
                           for (i = 0; i < count; i += 1) {
-                              d = m1.determinant();
+                              d = numeric.det(m1);
                           }
                       }
                       var elapsed = Date.now() - start;

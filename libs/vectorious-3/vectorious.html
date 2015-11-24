@@ -23,27 +23,61 @@
         return new Matrix(data);
       }
 
+      function getArray(matrix){
+        return matrix.toArray();
+      }
+
       var tests = {
 
-          'Multiplication': { test:
-            function(count, maxCount, milliSeconds, data) {
-             var m1 = createMatrix(data);
-             var m2 = createMatrix(data);
-             var m3 = createMatrix(data);
-             var start = Date.now();
- 						var loopCount = 0;
- 						while (Date.now() - start < milliSeconds && loopCount != maxCount) {
- 							++loopCount;
- 							for (var i = 0; i < count; ++i) {
- 								Matrix.multiply(m1, m2, m3);
- 							}
- 						}
-             return {time: Date.now()-start, loopCount: loopCount, result: m3};
+        'Multiplication': { test:
+          function(count, maxCount, milliSeconds, data) {
+           var m1 = createMatrix(data);
+           var m2 = createMatrix(data);
+           var m3;
+           var start = Date.now();
+           var loopCount = 0;
+           while (Date.now() - start < milliSeconds && loopCount != maxCount) {
+             ++loopCount;
+             for (var i = 0; i < count; ++i) {
+               m3 = m1.multiply(m2);
+             }
+           }
+           var runTime = Date.now()-start;
+           return {time: runTime, loopCount: loopCount, result: m3.toArray()};
+          }
+        },
+        'Inverse': {test:
+          function(count, maxCount, milliSeconds, data){
+            var m1 = createMatrix(data);
+            var m2;
+            var start = Date.now();
+            var loopCount = 0;
+            while (Date.now() - start < milliSeconds && loopCount != maxCount) {
+              ++loopCount;
+              for (var i = 0; i < count; ++i) {
+                m2 = m1.inverse();
+              }
             }
+            var runTime = Date.now()-start;
+            return {time: runTime, loopCount: loopCount, result: m2.toArray()};
+           }
           },
-          'Inverse': {test: null},
-          'Determinant': {test: null},
-          'Trace': {test: null}
+          'Determinant': {test:
+            function(count, maxCount, milliSeconds, data){
+              var m1 = createMatrix(data);
+              var d;
+              var start = Date.now();
+              var loopCount = 0;
+              while (Date.now() - start < milliSeconds && loopCount != maxCount) {
+                ++loopCount;
+                for (var i = 0; i < count; ++i) {
+                  d = m1.determinant();
+                }
+              }
+              var runTime = Date.now()-start;
+              return {time: runTime, loopCount: loopCount, result: d};
+             }
+            }
      };
 
 
