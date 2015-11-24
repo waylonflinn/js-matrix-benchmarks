@@ -56,7 +56,7 @@
         var internalRunCount = 5;
         testInfo.iframe.contentWindow.TestHelper.resetPseudoRandom();
 
-        var data = f(internalRunCount, 1, 1000, [[1, 1, 1], [1, 1, 1], [1, 1, 1]]);
+        var data = f(internalRunCount, 1, 1000, [[1, 0, 0], [0, 1, 0], [0, 0, 1]]);
         return data.result;
       }
 
@@ -72,14 +72,24 @@
           var results = [];
           var baseResult = null;
           for(var i = 0; i < tests.length; ++i) {
+
             var test = tests[i];
-            var result = preTest(test.library, test.test, test.testInfo);
-            results.push(result);
-            if (!baseResult && result) {
-              baseResult = result;
+            var data;
+            try{
+
+              var result = preTest(test.library, test.test, test.testInfo);
+              results.push(result);
+              if (!baseResult && result) {
+                baseResult = result;
+              }
+              var library = test.library;
+              var N = 128;
+              data = TestHelper.test(library, test.test, testData[name], N);
             }
-            var library = test.library;
-            var data = TestHelper.test(library, test.test, testData[name]);
+            catch(e) {
+              console.log(e);
+              data = {"avg" : null};
+            }
             testData[name][library] = data;
             if (data.avg === null) {
               log('<i>' + library + ' Unsupported</i>');
@@ -89,7 +99,7 @@
           }
 
           // TODO: add reference comparisons
-          /*
+
           // Compare the results to make sure we are testing the same thing
           for (var i = 0; i < results.length; ++i) {
             if (results[i] && !Compare(baseResult, results[i])) {
@@ -101,7 +111,7 @@
               testData[name][tests[i].library].bad = true;
             }
           }
-          */
+
           plotBenchmarks();
           updateTableData();
           setTimeout(function() {
@@ -199,9 +209,9 @@
 
       testURLs = [
         {name: 'Sylvester',    url: 'libs/Sylvester/Sylvester.html'      },
-        {name: 'vectorious3',   url: 'libs/vectorious-3/vectorious.html'    },
+        {name: 'vectorious',   url: 'libs/vectorious-3/vectorious.html'    },
         {name: 'math.js',   url: 'libs/math.js/math.js.html'    },
-        {name: 'vectorious',   url: 'libs/vectorious/vectorious.html'    },
+        {name: 'numeric',   url: 'libs/numeric/numeric.html'    },
       ];
 
       var waiting = 1;
@@ -302,7 +312,7 @@
                 noTics: benchmarks.length,
                 min: 0, max: benchmarks.length - 1,
               },
-              yaxis:{ title: 'Iterations Per Second (x100)', min: 0, max: 3 },
+              yaxis:{ title: 'Iterations Per Second (x100)', min: 0, max: 3.0 },
               title: "Numerical Computation Matrix Library Benchmark",
               subtitle: "Hundreds of iterations per second averaged over 10 runs (higher is better)",
               grid:{ verticalLines: true, backgroundColor: 'white' },
@@ -327,7 +337,7 @@
       var data_table_head = document.getElementById("data-table-head");
       var data_table_body = document.getElementById("data-table-body");
 
-      var libraries = ["Sylvester", "vectorious3", "math.js", 'vectorious'];
+      var libraries = ["Sylvester", "vectorious", "math.js", 'numeric'];
 
       function library_to_id(library) {
         return library.toLowerCase().replace(/\W/g, '_');

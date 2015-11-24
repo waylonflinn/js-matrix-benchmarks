@@ -20,7 +20,7 @@ function resetPseudoRandom() {
   }
 }
 
-function test(label, f) {
+function test(label, f, testData, N) {
   // Repeats each benchmark multiple times to smooth out anomalies
   // Also tracks min and max times
 
@@ -37,7 +37,7 @@ function test(label, f) {
   var minTime = 0;
   var maxTime = 0;
   var timePerRun = 300;
-  var N = 128;
+
   var initData = [];
 
   resetPseudoRandom();
